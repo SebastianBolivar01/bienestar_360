@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienestar360 | Gestión de Horas de Bienestar - Universidad Cooperativa de Colombia</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- HTML5 QR Code Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --bg-card-hover: rgba(51, 65, 85, 0.8);
+            --primary: #10b981; /* Emerald green UCC */
+            --primary-glow: rgba(16, 185, 129, 0.3);
+            --secondary: #3b82f6; /* UCC Blue */
+            --accent: #8b5cf6; /* Purple accent */
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top left, #1e1b4b, #0f172a 50%, #020617);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, .brand-text {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Glassmorphism utility */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            box-shadow: var(--shadow-glass);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-glass);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 800;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .brand-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #34d399, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        /* Demo Role Switcher Bar */
+        .demo-switcher {
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            overflow-x: auto;
+        }
+
+        .switcher-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .role-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            color: var(--text-muted);
+            padding: 0.4rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .role-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+
+        .role-btn.active {
+            background: linear-gradient(135deg, var(--primary), #059669);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Container Layout */
+        .main-container {
+            max-width: 1280px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        /* Metrics grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .stat-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .stat-val {
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .stat-lbl {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Progress Bar Widget */
+        .progress-card {
+            padding: 2rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(30, 41, 59, 0.8));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399);
+            width: 0%;
+            border-radius: 10px;
+            transition: width 1s ease-out;
+            box-shadow: 0 0 12px var(--primary);
+        }
+
+        /* Buttons & Controls */
+        .btn {
+            background: linear-gradient(135deg, var(--primary), #059669);
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--primary-glow);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            border: 1px solid var(--border-glass);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: none;
+        }
+
+        .btn-purple {
+            background: linear-gradient(135deg, var(--accent), #6d28d9);
+        }
+
+        .btn-purple:hover {
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Section Headings */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Cards Grid */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .act-card {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-deporte { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
+        .badge-salud { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+        .badge-cultura { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.4); }
+        .badge-desarrollo { background: rgba(139, 92, 246, 0.2); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.4); }
+
+        .act-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0.75rem 0 0.5rem 0;
+            color: #fff;
+        }
+
+        .act-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .act-meta {
+            font-size: 0.82rem;
+            color: #cbd5e1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 1.25rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-item i {
+            width: 16px;
+            color: var(--primary);
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 520px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text-muted);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Tables */
+        .data-table-container {
+            overflow-x: auto;
+        }
+
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        table.data-table th {
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.6);
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        table.data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        table.data-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Form Inputs */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #cbd5e1;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        /* QR Scanner Container */
+        #qr-reader {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px dashed var(--primary);
+            background: #000;
+            margin-bottom: 1rem;
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Header -->
+    <header>
+        <div class="brand-container">
+            <div class="brand-logo"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div>
+                <div class="brand-title">BIENESTAR 360</div>
+                <div class="brand-subtitle">Universidad Cooperativa de Colombia — Sede Pasto</div>
+            </div>
+        </div>
+
+        <div class="user-badge" id="current-user-badge">
+            <div class="avatar" id="user-avatar">C</div>
+            <div>
+                <div style="font-weight: 700; font-size: 0.9rem;" id="user-name">Carlos Andrés Coral</div>
+                <div style="font-size: 0.75rem; color: var(--primary);" id="user-role-lbl">Estudiante — Ing. Software</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Role Switcher bar for Demo -->
+    <div class="demo-switcher">
+        <span class="switcher-label"><i class="fa-solid fa-user-gear"></i> Roles de Prueba (RBAC):</span>
+        <button class="role-btn active" onclick="switchUserRole('estudiante.pasto@ucc.edu.co')">
+            <i class="fa-solid fa-user-graduate"></i> Estudiante
+        </button>
+        <button class="role-btn" onclick="switchUserRole('bienestar.docente@ucc.edu.co')">
+            <i class="fa-solid fa-chalkboard-user"></i> Encargado Bienestar
+        </button>
+        <button class="role-btn" onclick="switchUserRole('director.seccional@ucc.edu.co')">
+            <i class="fa-solid fa-briefcase"></i> Director Seccional
+        </button>
+        <button class="role-btn" onclick="switchUserRole('docente.regular@ucc.edu.co')">
+            <i class="fa-solid fa-user-slash"></i> Docente Regular (Sin Permiso QR)
+        </button>
+        <button class="role-btn" onclick="switchUserRole('admin.sistema@ucc.edu.co')">
+            <i class="fa-solid fa-shield-halved"></i> Admin Sistema
+        </button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+
+        <!-- STUDENT DASHBOARD -->
+        <div id="view-student" class="view-panel">
+            
+            <!-- Student Progress Card -->
+            <div class="glass-card progress-card">
+                <div class="progress-header">
+                    <div>
+                        <span class="badge badge-salud" style="margin-bottom: 0.5rem;">Progreso Horas de Bienestar</span>
+                        <h2 style="font-size: 1.8rem; margin-top: 4px;">Requisito de Grado Universitaria</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;" id="student-code-txt">Código: 748291 | Programa: Ingeniería de Software</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="font-size: 2.5rem; font-weight: 800; color: var(--primary);" id="prog-hours-txt">28.0</span>
+                        <span style="font-size: 1.2rem; color: var(--text-muted);">/ 60.0 hrs</span>
+                        <div style="font-size: 0.85rem; color: #cbd5e1; font-weight: 600;" id="prog-percent-txt">46.7% completado</div>
+                    </div>
+                </div>
+
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="prog-bar-fill" style="width: 46.7%;"></div>
+                </div>
+
+                <div style="display: flex; gap: 2rem; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08);">
+                    <div>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Horas Pendientes:</span>
+                        <div style="font-size: 1.1rem; font-weight: 700; color: var(--warning);" id="pending-hours-txt">32.0 hrs</div>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Actividades Asistidas:</span>
+                        <div style="font-size: 1.1rem; font-weight: 700; color: #fff;" id="attend-count-txt">1 registrada</div>
+                    </div>
+                    <div style="margin-left: auto;">
+                        <button class="btn btn-purple" onclick="openQrScannerModal()">
+                            <i class="fa-solid fa-qrcode"></i> Registrar Asistencia con QR
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Available Activities Section -->
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fa-solid fa-calendar-days" style="color: var(--primary);"></i> Actividades de Bienestar Disponibles
+                </div>
+                <div style="display: flex; gap: 0.5rem;" id="category-filters">
+                    <button class="role-btn active" onclick="filterCategory('TODAS', this)">Todas</button>
+                    <button class="role-btn" onclick="filterCategory('Deporte', this)">Deporte</button>
+                    <button class="role-btn" onclick="filterCategory('Salud', this)">Salud</button>
+                    <button class="role-btn" onclick="filterCategory('Cultura', this)">Cultura</button>
+                </div>
+            </div>
+
+            <!-- Activities Cards Grid -->
+            <div class="activities-grid" id="student-activities-grid">
+                <!-- Injected via JS -->
+            </div>
+
+            <!-- My History & Enrollments -->
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fa-solid fa-clock-rotate-left" style="color: var(--secondary);"></i> Mi Historial de Horas y Asistencia
+                </div>
+            </div>
+
+            <div class="glass-card data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Actividad</th>
+                            <th>Fecha</th>
+                            <th>Horas Otorga</th>
+                            <th>Método Registro</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="student-history-table">
+                        <!-- Injected via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- BIENESTAR STAFF DASHBOARD -->
+        <div id="view-bienestar" class="view-panel" style="display: none;">
+            
+            <!-- Admin Header Actions -->
+            <div class="section-header">
+                <div>
+                    <h2 style="font-size: 1.8rem;">Módulo Administrativo de Bienestar</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Gestión de actividades, generación de códigos QR y control de asistencia.</p>
+                </div>
+                <button class="btn" onclick="openCreateActivityModal()">
+                    <i class="fa-solid fa-plus"></i> Crear Nueva Actividad
+                </button>
+            </div>
+
+            <!-- Metrics -->
+            <div class="stats-grid">
+                <div class="glass-card stat-card">
+                    <div class="stat-icon" style="color: var(--primary);"><i class="fa-solid fa-users"></i></div>
+                    <div>
+                        <div class="stat-val" id="stat-students">3</div>
+                        <div class="stat-lbl">Estudiantes Registrados</div>
+                    </div>
+                </div>
+                <div class="glass-card stat-card">
+                    <div class="stat-icon" style="color: var(--secondary);"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div>
+                        <div class="stat-val" id="stat-activities">4</div>
+                        <div class="stat-lbl">Actividades Creadas</div>
+                    </div>
+                </div>
+                <div class="glass-card stat-card">
+                    <div class="stat-icon" style="color: var(--accent);"><i class="fa-solid fa-award"></i></div>
+                    <div>
+                        <div class="stat-val" id="stat-hours">5.0</div>
+                        <div class="stat-lbl">Horas Otorgadas Totales</div>
+                    </div>
+                </div>
+                <div class="glass-card stat-card">
+                    <div class="stat-icon" style="color: var(--warning);"><i class="fa-solid fa-qrcode"></i></div>
+                    <div>
+                        <div class="stat-val" id="stat-active-qr">1</div>
+                        <div class="stat-lbl">Sesiones QR Activas</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Management Table -->
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fa-solid fa-list-check" style="color: var(--primary);"></i> Gestión de Actividades Institucionales
+                </div>
+            </div>
+
+            <div class="glass-card data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Categoría</th>
+                            <th>Horas</th>
+                            <th>Cupos</th>
+                            <th>Estado</th>
+                            <th>Acciones QR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-activities-table">
+                        <!-- Injected via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- DIRECTOR & ADMIN DASHBOARD -->
+        <div id="view-director" class="view-panel" style="display: none;">
+            <div class="section-header">
+                <div>
+                    <h2 style="font-size: 1.8rem;" id="dir-panel-title">Consola Institucional de Seguimiento</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Información estadística global y auditoría de Horas de Bienestar Sede Pasto.</p>
+                </div>
+            </div>
+
+            <div class="glass-card" style="padding: 2rem; margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem;"><i class="fa-solid fa-chart-column" style="color: var(--primary);"></i> Resumen de Avance por Programa Académico</h3>
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Programa Académico</th>
+                                <th>Estudiantes Activos</th>
+                                <th>Horas Promedio Completadas</th>
+                                <th>Porcentaje de Cumplimiento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Ingeniería de Software</strong></td>
+                                <td>1 Estudiante</td>
+                                <td>28.0 / 60.0 hrs</td>
+                                <td><span class="badge badge-salud">46.7%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Medicina</strong></td>
+                                <td>1 Estudiante</td>
+                                <td>42.0 / 60.0 hrs</td>
+                                <td><span class="badge badge-deporte">70.0%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Psicología</strong></td>
+                                <td>1 Estudiante</td>
+                                <td>12.0 / 60.0 hrs</td>
+                                <td><span class="badge badge-cultura">20.0%</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- REGULAR PROFESSOR FORBIDDEN NOTICE -->
+        <div id="view-regular-prof" class="view-panel" style="display: none;">
+            <div class="glass-card" style="padding: 3rem; text-align: center; max-width: 600px; margin: 2rem auto;">
+                <div style="font-size: 3.5rem; color: var(--warning); margin-bottom: 1rem;">
+                    <i class="fa-solid fa-user-lock"></i>
+                </div>
+                <h2>Acceso Restringido según Términos del Proyecto</h2>
+                <p style="color: var(--text-muted); margin: 1rem 0; line-height: 1.6;">
+                    Como <strong>Profesor Regular</strong> (no perteneciente a la unidad autorizada de Bienestar Universitario), el sistema restringe el acceso a la consulta de Horas de Bienestar de los estudiantes y a la generación de códigos QR, garantizando la privacidad y el control de roles (RBAC).
+                </p>
+                <div class="badge badge-desarrollo" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+                    Regla de Negocio Sección 10.4 y 17 Cumplida
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL: QR Scanner for Student -->
+    <div class="modal-overlay" id="modal-qr-scan">
+        <div class="glass-card modal-content">
+            <button class="modal-close" onclick="closeQrScannerModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-qrcode" style="color: var(--primary);"></i> Escanear Código QR
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                Enfoca el código QR mostrado por el docente de Bienestar con tu cámara o ingresa el código manual.
+            </p>
+
+            <div id="qr-reader"></div>
+
+            <div style="text-align: center; margin: 1rem 0; font-size: 0.8rem; color: var(--text-muted);">
+                — O INGRESA EL CÓDIGO TOKEN MANUAL —
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" id="manual-qr-input" placeholder="Ej: UCC-QR-2-DEMO-PASTO">
+            </div>
+
+            <button class="btn btn-purple" style="width: 100%; justify-content: center;" onclick="submitManualQrToken()">
+                <i class="fa-solid fa-check-double"></i> Validar y Registrar Asistencia
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: Display QR Code for Bienestar Staff -->
+    <div class="modal-overlay" id="modal-qr-display">
+        <div class="glass-card modal-content" style="text-align: center;">
+            <button class="modal-close" onclick="closeQrDisplayModal()"><i class="fa-solid fa-xmark"></i></button>
+            <span class="badge badge-salud" style="margin-bottom: 0.5rem;">Sesión QR de Asistencia Activa</span>
+            <h3 id="qr-display-title" style="margin-top: 4px; font-size: 1.3rem;">Taller de Manejo del Estrés</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Muestra este código a los estudiantes para que lo escaneen.</p>
+
+            <div style="background: #fff; padding: 1.5rem; border-radius: 16px; display: inline-block; margin: 1.5rem 0; box-shadow: 0 0 25px rgba(255,255,255,0.2);">
+                <img id="qr-display-img" src="" alt="Código QR de Asistencia" style="width: 260px; height: 260px; display: block;">
+            </div>
+
+            <div style="font-family: monospace; font-size: 1.1rem; color: var(--primary); font-weight: 700; background: rgba(0,0,0,0.4); padding: 0.5rem; border-radius: 8px;" id="qr-token-code">
+                UCC-QR-2-DEMO-PASTO
+            </div>
+
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
+                <i class="fa-solid fa-clock"></i> Sesión válida durante la clase/evento.
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Create Activity -->
+    <div class="modal-overlay" id="modal-create-activity">
+        <div class="glass-card modal-content">
+            <button class="modal-close" onclick="closeCreateActivityModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="margin-bottom: 1.5rem;"><i class="fa-solid fa-calendar-plus" style="color: var(--primary);"></i> Crear Nueva Actividad de Bienestar</h3>
+
+            <form id="form-create-activity" onsubmit="submitCreateActivity(event)">
+                <div class="form-group">
+                    <label class="form-label">Título de la Actividad</label>
+                    <input type="text" class="form-control" id="act-title-input" required placeholder="Ej: Talleres de Cuidado Psicológico">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Categoría</label>
+                    <select class="form-control" id="act-category-input">
+                        <option value="Deporte">Deporte</option>
+                        <option value="Salud">Salud & Bienestar</option>
+                        <option value="Cultura">Cultura y Danza</option>
+                        <option value="Desarrollo Personal">Desarrollo Personal</option>
+                    </select>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Horas que Otorga</label>
+                        <input type="number" step="0.5" class="form-control" id="act-hours-input" value="4.0" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Cupos Totales</label>
+                        <input type="number" class="form-control" id="act-slots-input" value="30" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Lugar de Realización</label>
+                    <input type="text" class="form-control" id="act-location-input" required placeholder="Ej: Polideportivo Pasto / Sala 301">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Descripción</label>
+                    <textarea class="form-control" id="act-desc-input" rows="3" placeholder="Breve descripción del evento..."></textarea>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                    <i class="fa-solid fa-floppy-disk"></i> Guardar y Publicar Actividad
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast-msg">
+        <i class="fa-solid fa-circle-check" style="color: var(--primary); font-size: 1.3rem;"></i>
+        <span id="toast-txt">Notificación del sistema</span>
+    </div>
+
+    <script>
+        // State
+        let currentUser = null;
+        let usersList = [];
+        let activitiesList = [];
+        let html5QrScanner = null;
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', async () => {
+            await fetchUsers();
+            // Default login as Student (Carlos Coral)
+            switchUserRole('estudiante.pasto@ucc.edu.co');
+        });
+
+        async function fetchUsers() {
+            try {
+                const res = await fetch('/api/auth/users');
+                usersList = await res.json();
+            } catch (err) {
+                console.error("Error fetching users", err);
+            }
+        }
+
+        async function switchUserRole(email) {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, password: '123456' })
+            });
+            const data = await res.json();
+            if (data.success) {
+                currentUser = data.user;
+                updateUserBadge();
+                updateRoleButtons(email);
+                renderViewForRole();
+                showToast(`Sesión iniciada como ${currentUser.fullName} (${currentUser.role})`);
+            }
+        }
+
+        function updateRoleButtons(email) {
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('onclick')?.includes(email)) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        function updateUserBadge() {
+            document.getElementById('user-avatar').innerText = currentUser.fullName.charAt(0);
+            document.getElementById('user-name').innerText = currentUser.fullName;
+            document.getElementById('user-role-lbl').innerText = `${currentUser.role} — ${currentUser.academicProgram}`;
+        }
+
+        async function renderViewForRole() {
+            // Hide all panels
+            document.querySelectorAll('.view-panel').forEach(el => el.style.display = 'none');
+
+            if (currentUser.role === 'ESTUDIANTE') {
+                document.getElementById('view-student').style.display = 'block';
+                await loadStudentDashboard();
+            } else if (currentUser.role === 'DOCENTE_BIENESTAR' || currentUser.role === 'ADMIN_INSTITUCIONAL') {
+                document.getElementById('view-bienestar').style.display = 'block';
+                await loadBienestarDashboard();
+            } else if (currentUser.role === 'DIRECTOR') {
+                document.getElementById('view-director').style.display = 'block';
+            } else if (currentUser.role === 'DOCENTE_REGULAR') {
+                document.getElementById('view-regular-prof').style.display = 'block';
+            }
+        }
+
+        // Student Dashboard logic
+        async function loadStudentDashboard() {
+            // 1. Load progress
+            const progRes = await fetch(`/api/student/${currentUser.id}/progress`);
+            const progData = await progRes.json();
+            
+            document.getElementById('student-code-txt').innerText = `Código: ${progData.institutionalCode} | Programa: ${progData.academicProgram}`;
+            document.getElementById('prog-hours-txt').innerText = progData.completedHours.toFixed(1);
+            document.getElementById('prog-percent-txt').innerText = `${progData.progressPercentage}% completado`;
+            document.getElementById('prog-bar-fill').style.width = `${progData.progressPercentage}%`;
+            document.getElementById('pending-hours-txt').innerText = `${progData.pendingHours.toFixed(1)} hrs`;
+            document.getElementById('attend-count-txt').innerText = `${progData.totalAttendances} registrada(s)`;
+
+            // 2. Load activities
+            await loadActivitiesList();
+
+            // 3. Load history
+            const histRes = await fetch(`/api/student/${currentUser.id}/history`);
+            const history = await histRes.json();
+            
+            const tableBody = document.getElementById('student-history-table');
+            if (history.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--text-muted);">Aún no has registrado asistencia a eventos de Bienestar.</td></tr>`;
+            } else {
+                tableBody.innerHTML = history.map(att => `
+                    <tr>
+                        <td><strong>${att.activity.title}</strong></td>
+                        <td>${new Date(att.timestamp).toLocaleDateString()} ${new Date(att.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
+                        <td><span style="color: var(--primary); font-weight:700;">+${att.hoursAwarded} hrs</span></td>
+                        <td><span class="badge badge-salud"><i class="fa-solid fa-qrcode"></i> Escaneo QR</span></td>
+                        <td><span style="color: var(--primary); font-weight:600;"><i class="fa-solid fa-circle-check"></i> ${att.status}</span></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        async function loadActivitiesList() {
+            const res = await fetch('/api/activities');
+            activitiesList = await res.json();
+            renderStudentActivitiesGrid(activitiesList);
+        }
+
+        function renderStudentActivitiesGrid(list) {
+            const grid = document.getElementById('student-activities-grid');
+            grid.innerHTML = list.map(act => {
+                let badgeClass = 'badge-deporte';
+                if (act.category.toLowerCase().includes('salud')) badgeClass = 'badge-salud';
+                if (act.category.toLowerCase().includes('cultura')) badgeClass = 'badge-cultura';
+                if (act.category.toLowerCase().includes('desarrollo')) badgeClass = 'badge-desarrollo';
+
+                return `
+                    <div class="glass-card act-card">
+                        <div>
+                            <span class="badge ${badgeClass}">${act.category}</span>
+                            <div class="act-title">${act.title}</div>
+                            <div class="act-desc">${act.description}</div>
+                        </div>
+
+                        <div>
+                            <div class="act-meta">
+                                <div class="meta-item"><i class="fa-solid fa-clock"></i> <span>Otorga <strong>${act.hoursGranted} Horas</strong> de Bienestar</span></div>
+                                <div class="meta-item"><i class="fa-solid fa-location-dot"></i> <span>${act.location}</span></div>
+                                <div class="meta-item"><i class="fa-solid fa-users"></i> <span>Cupos disponibles: <strong>${act.availableSlots} / ${act.totalSlots}</strong></span></div>
+                            </div>
+
+                            <button class="btn" style="width: 100%; justify-content: center;" onclick="enrollStudent(${act.id})" ${act.availableSlots <= 0 ? 'disabled' : ''}>
+                                ${act.availableSlots <= 0 ? 'Cupos Agotados' : '<i class="fa-solid fa-user-plus"></i> Inscribirme Ahora'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterCategory(cat, btn) {
+            document.querySelectorAll('#category-filters button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            if (cat === 'TODAS') {
+                renderStudentActivitiesGrid(activitiesList);
+            } else {
+                const filtered = activitiesList.filter(a => a.category.toLowerCase().includes(cat.toLowerCase()));
+                renderStudentActivitiesGrid(filtered);
+            }
+        }
+
+        async function enrollStudent(activityId) {
+            try {
+                const res = await fetch(`/api/enrollments?studentId=${currentUser.id}&activityId=${activityId}`, {
+                    method: 'POST'
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    showToast("¡Te has inscrito exitosamente a la actividad!");
+                    await loadStudentDashboard();
+                } else {
+                    showToast(data.error || "No se pudo realizar la inscripción.");
+                }
+            } catch (err) {
+                showToast("Error de conexión al inscribirse.");
+            }
+        }
+
+        // Bienestar Staff Dashboard logic
+        async function loadBienestarDashboard() {
+            const statsRes = await fetch('/api/stats/dashboard');
+            const stats = await statsRes.json();
+            document.getElementById('stat-students').innerText = stats.totalStudents;
+            document.getElementById('stat-activities').innerText = stats.totalActivities;
+            document.getElementById('stat-hours').innerText = `${stats.totalHoursGranted} hrs`;
+            document.getElementById('stat-active-qr').innerText = stats.activeQrSessions;
+
+            const res = await fetch('/api/activities');
+            const activities = await res.json();
+            
+            const tbody = document.getElementById('admin-activities-table');
+            tbody.innerHTML = activities.map(act => `
+                <tr>
+                    <td><strong>${act.title}</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">${act.location}</span></td>
+                    <td><span class="badge badge-salud">${act.category}</span></td>
+                    <td><strong>${act.hoursGranted} hrs</strong></td>
+                    <td>${act.availableSlots} / ${act.totalSlots}</td>
+                    <td><span class="badge ${act.status === 'EN_CURSO' ? 'badge-salud' : 'badge-deporte'}">${act.status}</span></td>
+                    <td>
+                        <button class="btn btn-purple" style="padding:0.4rem 0.8rem; font-size:0.8rem;" onclick="generateQrModal(${act.id})">
+                            <i class="fa-solid fa-qrcode"></i> Generar / Mostrar QR
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // QR Generation Modal for Staff
+        async function generateQrModal(activityId) {
+            try {
+                const res = await fetch(`/api/qr/generate?activityId=${activityId}&userId=${currentUser.id}`, {
+                    method: 'POST'
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    document.getElementById('qr-display-title').innerText = data.activityTitle;
+                    document.getElementById('qr-display-img').src = data.qrBase64Image;
+                    document.getElementById('qr-token-code').innerText = data.token;
+                    document.getElementById('modal-qr-display').style.display = 'flex';
+                    showToast("Código QR generado para la actividad.");
+                } else {
+                    showToast(data.error || "No se pudo generar el código QR.");
+                }
+            } catch (err) {
+                showToast("Error al solicitar código QR.");
+            }
+        }
+
+        function closeQrDisplayModal() {
+            document.getElementById('modal-qr-display').style.display = 'none';
+        }
+
+        // Student QR Scanner Modal
+        function openQrScannerModal() {
+            document.getElementById('modal-qr-scan').style.display = 'flex';
+            if (!html5QrScanner) {
+                html5QrScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 220 });
+                html5QrScanner.render((decodedText) => {
+                    document.getElementById('manual-qr-input').value = decodedText;
+                    submitManualQrToken();
+                }, (error) => {
+                    // silent scan error loop
+                });
+            }
+        }
+
+        function closeQrScannerModal() {
+            document.getElementById('modal-qr-scan').style.display = 'none';
+            if (html5QrScanner) {
+                html5QrScanner.clear();
+                html5QrScanner = null;
+            }
+        }
+
+        async function submitManualQrToken() {
+            const token = document.getElementById('manual-qr-input').value.trim();
+            if (!token) {
+                showToast("Por favor ingresa o escanea un token de QR válido.");
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/qr/scan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        studentId: currentUser.id,
+                        qrToken: token
+                    })
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    closeQrScannerModal();
+                    showToast(`¡Excelente! ${data.message} +${data.hoursAwarded} hrs otorgadas.`);
+                    await loadStudentDashboard();
+                } else {
+                    showToast(data.error || data.message || "Error al validar el código QR.");
+                }
+            } catch (err) {
+                showToast("Error de conexión al validar el QR.");
+            }
+        }
+
+        // Create Activity Modal
+        function openCreateActivityModal() {
+            document.getElementById('modal-create-activity').style.display = 'flex';
+        }
+
+        function closeCreateActivityModal() {
+            document.getElementById('modal-create-activity').style.display = 'none';
+        }
+
+        async function submitCreateActivity(e) {
+            e.preventDefault();
+            const title = document.getElementById('act-title-input').value;
+            const category = document.getElementById('act-category-input').value;
+            const hoursGranted = parseFloat(document.getElementById('act-hours-input').value);
+            const totalSlots = parseInt(document.getElementById('act-slots-input').value);
+            const location = document.getElementById('act-location-input').value;
+            const description = document.getElementById('act-desc-input').value;
+
+            try {
+                const res = await fetch('/api/activities', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        title, category, hoursGranted, totalSlots, location, description,
+                        createdByUserId: currentUser.id
+                    })
+                });
+                if (res.ok) {
+                    closeCreateActivityModal();
+                    showToast("¡Nueva actividad creada y publicada con éxito!");
+                    await loadBienestarDashboard();
+                } else {
+                    const data = await res.json();
+                    showToast(data.error || "No se pudo crear la actividad.");
+                }
+            } catch (err) {
+                showToast("Error de conexión al crear actividad.");
+            }
+        }
+
+        // Toast Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast-msg');
+            document.getElementById('toast-txt').innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
