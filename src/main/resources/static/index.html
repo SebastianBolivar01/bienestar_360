@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bienestar 360 | Campus Virtual - Universidad Cooperativa de Colombia</title>
+    <title>Bienestar 360 | Universidad Cooperativa de Colombia</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,7 +60,7 @@
         }
 
         /* =========================================================
-           1. LOGIN SCREEN (RESPONSIVE)
+           1. LOGIN SCREEN WITH BIENESTAR 360 BRANDING
            ========================================================= */
         #screen-login {
             align-items: center;
@@ -204,7 +204,7 @@
         }
 
         /* =========================================================
-           2. UNIVERSAL DESKTOP + MOBILE APP LAYOUT (RESPONSIVE)
+           2. MAIN APP NAVBAR & HERO (BIENESTAR 360)
            ========================================================= */
         header.ucc-top-header {
             background: #ffffff;
@@ -270,7 +270,7 @@
             flex: 1;
         }
 
-        /* Metrics grid for Desktop & Tablet */
+        /* Metrics grid for Desktop */
         .metrics-grid-desktop {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -335,7 +335,6 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.1);
         }
 
-        /* Table container */
         .table-ucc-container {
             background: #ffffff;
             border-radius: 12px;
@@ -365,9 +364,8 @@
             border-bottom: 1px solid #f1f5f9;
         }
 
-        /* Bottom Nav for Mobile ONLY */
         .bottom-nav-mobile {
-            display: none; /* Hidden on Desktop */
+            display: none;
             position: fixed;
             bottom: 0; left: 0; width: 100%;
             background: #ffffff;
@@ -396,7 +394,6 @@
             color: var(--ucc-teal);
         }
 
-        /* Camera Box */
         #camera-scanner-container {
             width: 100%;
             max-width: 480px;
@@ -408,7 +405,6 @@
             margin: 0 auto 1rem auto;
         }
 
-        /* Modals */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -450,56 +446,33 @@
 
         .toast.show { transform: translateY(0); opacity: 1; }
 
-        /* =========================================================
-           MEDIA QUERIES FOR RESPONSIVE ADAPTATION (DESKTOP VS MOBILE)
-           ========================================================= */
         @media (max-width: 768px) {
-            header.ucc-top-header {
-                padding: 0.6rem 1rem;
-            }
-            .ucc-full-title {
-                display: none; /* Hide long text on mobile top header */
-            }
-            .ucc-sub-navbar {
-                padding: 0 0.5rem;
-            }
-            .nav-sub-item {
-                font-size: 0.8rem;
-                padding: 0.65rem 0.4rem;
-            }
-            .ucc-hero-banner {
-                padding: 1.5rem 1rem;
-            }
-            .ucc-hero-banner h1 {
-                font-size: 1.4rem;
-            }
-            .ucc-main-container {
-                margin: 1rem auto;
-                padding: 0 1rem 80px 1rem; /* Space for bottom nav on mobile */
-            }
-            .bottom-nav-mobile {
-                display: flex; /* Show bottom nav on mobile screen */
-            }
-            .activities-grid-ucc {
-                grid-template-columns: 1fr;
-            }
+            header.ucc-top-header { padding: 0.6rem 1rem; }
+            .ucc-full-title { display: none; }
+            .ucc-sub-navbar { padding: 0 0.5rem; }
+            .nav-sub-item { font-size: 0.8rem; padding: 0.65rem 0.4rem; }
+            .ucc-hero-banner { padding: 1.5rem 1rem; }
+            .ucc-hero-banner h1 { font-size: 1.4rem; }
+            .ucc-main-container { margin: 1rem auto; padding: 0 1rem 80px 1rem; }
+            .bottom-nav-mobile { display: flex; }
+            .activities-grid-ucc { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <!-- =========================================================
-         1. LOGIN SCREEN (RESPONSIVE)
+         1. LOGIN SCREEN (BIENESTAR 360 BRANDING)
          ========================================================= -->
     <div id="screen-login" class="app-screen active">
         <div class="watermark-bg"></div>
         <div class="login-box">
             <div class="login-header-logos">
                 <div class="campus-logo-left">
-                    <div class="star-icon-box"><i class="fa-solid fa-sun"></i></div>
+                    <div class="star-icon-box"><i class="fa-solid fa-graduation-cap"></i></div>
                     <div>
-                        <div class="campus-title-text">CAMPUS</div>
-                        <div style="color:#cbd5e1; font-size:0.85rem;">Virtual</div>
+                        <div class="campus-title-text">BIENESTAR</div>
+                        <div style="color:var(--ucc-lime); font-size:0.9rem; font-weight:800;">360</div>
                     </div>
                 </div>
 
@@ -520,7 +493,7 @@
                     <input type="password" class="form-control-ucc" id="login-password" required placeholder="••••••••">
                 </div>
 
-                <button type="submit" class="btn-ucc-lime">Ingresar</button>
+                <button type="submit" class="btn-ucc-lime">Ingresar a Bienestar 360</button>
             </form>
 
             <div style="margin-top: 1.5rem; text-align: center;">
@@ -528,17 +501,17 @@
                 <button class="quick-acc-btn" onclick="fillLoginForm('estudiante.pasto@ucc.edu.co')">🎓 Estudiante</button>
                 <button class="quick-acc-btn" onclick="fillLoginForm('bienestar.docente@ucc.edu.co')">👨‍🏫 Profesor Bienestar</button>
                 <button class="quick-acc-btn" onclick="fillLoginForm('director.seccional@ucc.edu.co')">💼 Director</button>
-                <button class="quick-acc-btn" onclick="fillLoginForm('docente.regular@ucc.edu.co')">🚫 Docente Regular</button>
+                <button class="quick-acc-btn" onclick="fillLoginForm('docente.regular@ucc.edu.co')">👨‍🏫 Docente Regular</button>
             </div>
         </div>
     </div>
 
     <!-- =========================================================
-         2. MAIN APP SCREEN (FULL DESKTOP & RESPONSIVE MOBILE)
+         2. MAIN APP SCREEN (BIENESTAR 360)
          ========================================================= -->
     <div id="screen-main-app" class="app-screen">
         
-        <!-- Header Superior Institucional -->
+        <!-- Header Superior -->
         <header class="ucc-top-header">
             <div style="display: flex; align-items: center; gap: 12px;">
                 <span class="uc-green-text" style="font-size: 2.2rem;">UC</span>
@@ -560,24 +533,22 @@
             </div>
         </header>
 
-        <!-- Sub-Navbar de Navegación por Secciones -->
+        <!-- Sub-Navbar -->
         <div class="ucc-sub-navbar" id="sub-navbar-links">
             <!-- Dynamically populated based on Role -->
         </div>
 
         <!-- Hero Welcome Banner -->
         <div class="ucc-hero-banner">
-            <h1 id="hero-title-txt">¡Hola Carlos Andrés! Bienvenid@ a tu Campus Virtual</h1>
-            <p id="hero-subtitle-txt">Portal Institucional para la Gestión y Seguimiento de las Horas de Bienestar — Sede Pasto</p>
+            <h1 id="hero-title-txt">¡Hola Carlos Andrés! Bienvenid@ a Bienestar 360</h1>
+            <p id="hero-subtitle-txt">Plataforma Institucional para la Gestión y Seguimiento de las Horas de Bienestar — Sede Pasto</p>
         </div>
 
         <!-- Main Body Area Container -->
         <div class="ucc-main-container">
 
-            <!-- SECTION: STUDENT DASHBOARD -->
+            <!-- SECTION 1: STUDENT DASHBOARD -->
             <div id="section-student" class="app-section">
-                
-                <!-- Metrics Bar for Student Desktop -->
                 <div class="metrics-grid-desktop">
                     <div class="metric-card-ucc">
                         <div class="metric-icon-box"><i class="fa-solid fa-award"></i></div>
@@ -602,7 +573,6 @@
                     </div>
                 </div>
 
-                <!-- Progress Bar Container -->
                 <div style="background: #ffffff; border-radius: 12px; padding: 1.5rem; border-left: 6px solid var(--ucc-teal); box-shadow: var(--shadow-subtle); margin-bottom: 2rem;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-weight: 700; color: var(--ucc-navy-dark); font-size: 1.05rem;">Progreso de Graduación de Horas de Bienestar</span>
@@ -613,19 +583,17 @@
                     </div>
                 </div>
 
-                <!-- SUB-SECTION: ACTIVITIES CATALOG -->
                 <div id="sub-student-activities">
                     <h3 style="font-size: 1.3rem; color: var(--ucc-navy-dark); margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">
-                        Catálogo de Actividades y Eventos de Bienestar
+                        Catálogo de Actividades de Bienestar Disponibles
                     </h3>
                     <div class="activities-grid-ucc" id="student-events-grid"></div>
                 </div>
 
-                <!-- SUB-SECTION: CAMERA SCANNER (SHOWN IN DESKTOP AND MOBILE) -->
                 <div id="sub-student-scanner" style="display: none; margin-top: 2rem;">
                     <div style="text-align: center; max-width: 500px; margin: 0 auto;">
                         <h3 style="font-size: 1.3rem; color: var(--ucc-navy-dark); margin-bottom: 0.5rem;">Escáner de Asistencia con Cámara</h3>
-                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Apunta tu cámara al código QR mostrado por el Profesor de Bienestar en clase o evento presencial.</p>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Apunta tu cámara al código QR mostrado por el Profesor de Bienestar en la actividad.</p>
                         
                         <div id="camera-scanner-container">
                             <div id="reader-camera" style="width:100%; height:100%;"></div>
@@ -633,10 +601,9 @@
                     </div>
                 </div>
 
-                <!-- SUB-SECTION: HISTORY TABLE -->
                 <div id="sub-student-history" style="margin-top: 2.5rem;">
                     <h3 style="font-size: 1.3rem; color: var(--ucc-navy-dark); margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">
-                        Historial de Horas y Asistencias Registradas
+                        Historial Personal de Horas Registradas
                     </h3>
                     <div class="table-ucc-container">
                         <table class="ucc-table">
@@ -653,14 +620,13 @@
                         </table>
                     </div>
                 </div>
-
             </div>
 
-            <!-- SECTION: ADMIN / BIENESTAR DASHBOARD -->
+            <!-- SECTION 2: BIENESTAR STAFF & ADMIN DASHBOARD -->
             <div id="section-admin" class="app-section" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
                     <h2 style="font-size: 1.4rem; color: var(--ucc-navy-dark); font-family: 'Outfit', sans-serif;">
-                        Gestión Administrativa de Eventos y Códigos QR
+                        Gestión Administrativa de Eventos y Generación QR
                     </h2>
                     <button class="btn-ucc-lime" style="width: auto; padding: 0.65rem 1.25rem; font-size: 0.9rem;" onclick="openCreateActivityModal()">
                         <i class="fa-solid fa-plus"></i> Crear Nueva Actividad
@@ -684,21 +650,27 @@
                 </div>
             </div>
 
-            <!-- SECTION: FORBIDDEN -->
-            <div id="section-forbidden" class="app-section" style="display: none; text-align: center; padding: 3rem 0;">
-                <div style="background: #ffffff; padding: 3rem; border-radius: 16px; max-width: 520px; margin: 0 auto; box-shadow: var(--shadow-subtle);">
-                    <div style="font-size: 3.5rem; color: #ea580c; margin-bottom: 1rem;"><i class="fa-solid fa-user-lock"></i></div>
-                    <h2 style="color: var(--ucc-navy-dark); margin-bottom: 0.5rem;">Acceso Restringido</h2>
-                    <p style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;">
-                        Como <strong>Docente Regular</strong>, tu usuario no cuenta con privilegios para consultar Horas de Bienestar ni para generar códigos QR.
+            <!-- SECTION 3: DOCENTE REGULAR (PANELES E INFORMACIÓN SIN PERMISOS DE HORAS NI QR) -->
+            <div id="section-regular-docente" class="app-section" style="display: none;">
+                <div style="background: #ffffff; border-radius: 12px; padding: 1.5rem; border-left: 6px solid var(--ucc-teal); box-shadow: var(--shadow-subtle); margin-bottom: 2rem;">
+                    <h3 style="color: var(--ucc-navy-dark); font-family: 'Outfit', sans-serif; font-size: 1.2rem; margin-bottom: 0.5rem;">
+                        <i class="fa-solid fa-chalkboard-user" style="color: var(--ucc-teal);"></i> Vista de Consulta Docente Regular
+                    </h3>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+                        Bienvenido(a). Como Docente Regular puedes consultar el catálogo de actividades institucionales programadas por la Unidad de Bienestar Universitario. 
+                        <strong>Conforme a la normativa institucional (RBAC), los docentes no pertenecientes a la unidad de Bienestar no pueden visualizar el registro de horas de los estudiantes ni generar códigos QR de asistencia.</strong>
                     </p>
-                    <button class="btn-ucc-lime" style="width: auto; padding: 0.65rem 1.5rem;" onclick="logout()">Volver al Inicio de Sesión</button>
                 </div>
+
+                <h3 style="font-size: 1.3rem; color: var(--ucc-navy-dark); margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">
+                    Actividades Institucionales de Bienestar en Curso y Programadas
+                </h3>
+                <div class="activities-grid-ucc" id="regular-prof-events-grid"></div>
             </div>
 
         </div>
 
-        <!-- Bottom Navigation Bar for Mobile View ONLY -->
+        <!-- Mobile Bottom Nav -->
         <div class="bottom-nav-mobile" id="mobile-bottom-nav">
             <button class="nav-mob-btn active" onclick="switchMobileTab('events', this)">
                 <i class="fa-solid fa-calendar-days" style="font-size: 1.2rem;"></i>
@@ -773,7 +745,7 @@
 
                 <div style="margin-bottom: 1.5rem;">
                     <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:4px;">DESCRIPCIÓN</label>
-                    <textarea class="form-control-ucc" id="act-desc" rows="3" placeholder="Detalles del evento..."></textarea>
+                    <textarea class="form-control-ucc" id="act-desc" rows="3" placeholder="Detalles..."></textarea>
                 </div>
 
                 <button type="submit" class="btn-ucc-lime">Guardar y Publicar Evento</button>
@@ -819,13 +791,13 @@
                 if (res.ok && data.success) {
                     currentUser = data.user;
                     localStorage.setItem('bienestar360_user', JSON.stringify(currentUser));
-                    showToast(`Bienvenido(a) a tu Campus Virtual, ${currentUser.fullName}`);
+                    showToast(`Bienvenido(a) a Bienestar 360, ${currentUser.fullName}`);
                     routeUserToApp();
                 } else {
                     showToast(data.message || "Credenciales inválidas.");
                 }
             } catch (err) {
-                showToast("Error de comunicación con el servidor.");
+                showToast("Error al conectar con el servidor.");
             }
         }
 
@@ -835,18 +807,15 @@
             const mainApp = document.getElementById('screen-main-app');
             mainApp.classList.add('active');
 
-            // Setup Header User Badge
             const names = currentUser.fullName.split(' ');
             const initials = names.length > 1 ? names[0].charAt(0) + names[1].charAt(0) : names[0].charAt(0);
             document.getElementById('user-avatar-badge').innerText = initials.toUpperCase();
             document.getElementById('user-display-name').innerText = currentUser.fullName;
             document.getElementById('user-display-role').innerText = `${currentUser.role} — ${currentUser.academicProgram}`;
 
-            document.getElementById('hero-title-txt').innerText = `¡Hola ${names[0]}! Bienvenid@ a tu Campus Virtual`;
+            document.getElementById('hero-title-txt').innerText = `¡Hola ${names[0]}! Bienvenid@ a Bienestar 360`;
 
-            // Hide sections
             document.querySelectorAll('.app-section').forEach(sec => sec.style.display = 'none');
-
             const navContainer = document.getElementById('sub-navbar-links');
 
             if (currentUser.role === 'ESTUDIANTE') {
@@ -863,9 +832,13 @@
                     <a class="nav-sub-item active"><i class="fa-solid fa-chart-pie"></i> Gestión de Actividades y QR</a>
                 `;
                 loadAdminData();
-            } else {
-                document.getElementById('section-forbidden').style.display = 'block';
-                navContainer.innerHTML = ``;
+            } else if (currentUser.role === 'DOCENTE_REGULAR') {
+                // Docente regular CAN log in and view events, but CANNOT view student hours nor generate QR/events
+                document.getElementById('section-regular-docente').style.display = 'block';
+                navContainer.innerHTML = `
+                    <a class="nav-sub-item active"><i class="fa-solid fa-eye"></i> Cartelera de Actividades Institucionales</a>
+                `;
+                loadRegularDocenteEvents();
             }
         }
 
@@ -1030,6 +1003,34 @@
                         </button>
                     </td>
                 </tr>
+            `).join('');
+        }
+
+        /* REGULAR DOCENTE EVENTS DISPLAY (VIEW ONLY - NO STUDENT HOURS, NO CREATION, NO QR GENERATION) */
+        async function loadRegularDocenteEvents() {
+            const res = await fetch('/api/activities');
+            const events = await res.json();
+            const grid = document.getElementById('regular-prof-events-grid');
+
+            grid.innerHTML = events.map(ev => `
+                <div class="act-card-ucc">
+                    <div>
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.5rem;">
+                            <span style="background:#e6f7fa; color:var(--ucc-teal); padding:0.2rem 0.6rem; border-radius:12px; font-size:0.7rem; font-weight:700;">${ev.category}</span>
+                            <strong style="color:var(--ucc-teal); font-size:0.9rem;">+${ev.hoursGranted} hrs</strong>
+                        </div>
+                        <h4 style="font-size:1.05rem; color:var(--ucc-navy-dark); margin-bottom:0.5rem;">${ev.title}</h4>
+                        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">${ev.description}</p>
+                    </div>
+                    <div>
+                        <div style="font-size:0.78rem; color:#475569; margin-bottom:0.75rem; border-top:1px solid #f1f5f9; padding-top:0.5rem;">
+                            <i class="fa-solid fa-location-dot" style="color:var(--ucc-teal);"></i> ${ev.location} | Cupos: <strong>${ev.availableSlots}/${ev.totalSlots}</strong>
+                        </div>
+                        <div style="font-size:0.75rem; color:#94a3b8; font-weight:600; text-align:center; background:#f8fafc; padding:0.5rem; border-radius:6px;">
+                            <i class="fa-solid fa-lock" style="color:var(--ucc-teal);"></i> QR gestionado exclusivamente por Bienestar
+                        </div>
+                    </div>
+                </div>
             `).join('');
         }
 
